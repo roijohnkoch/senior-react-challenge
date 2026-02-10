@@ -1,17 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserById } from "@/lib/api";
-import Loading from "./Loading";
-import Error from "./Error";
-import styles from "./Modal.module.css";
+import { Loading, Error } from "@/components";
+import styles from "./UserDetailsModal.module.css";
 
-interface ModalProps {
+interface UserDetailsModalProps {
   userId: number | null;
   onClose: () => void;
   isOpen: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({ userId, onClose, isOpen }) => {
+const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ userId, onClose, isOpen }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const { data: user, isLoading, isError, refetch } = useQuery({
@@ -77,4 +76,4 @@ const Modal: React.FC<ModalProps> = ({ userId, onClose, isOpen }) => {
   );
 }
 
-export default Modal;
+export default UserDetailsModal;

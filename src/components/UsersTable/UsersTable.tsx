@@ -1,14 +1,14 @@
 import { User } from "@/types";
-import Loading from "./Loading";
-import styles from "./Table.module.css";
+import Loading from "../Loading/Loading";
+import styles from "./UsersTable.module.css";
 
-interface TableProps {
+interface UsersTableProps {
   users: User[];
   setSelectedUser: (user: number | null) => void;
   isLoading?: boolean;
 }
 
-const Table: React.FC<TableProps> = ({ users, setSelectedUser, isLoading = false }) => {
+const UsersTable: React.FC<UsersTableProps> = ({ users, setSelectedUser, isLoading = false }) => {
   return (
     <table className={styles.table}>
       <thead>
@@ -45,4 +45,4 @@ const Table: React.FC<TableProps> = ({ users, setSelectedUser, isLoading = false
   )
 };
 
-export default Table;
+export default UsersTable;

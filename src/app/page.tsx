@@ -3,11 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUsers } from "@/lib/api";
-import Table from "@/components/Table";
-import Filter from "@/components/Filter";
-import Pagination from "@/components/Pagination";
-import Modal from "@/components/Modal";
-import Error from "@/components/Error";
+import { Filter, Pagination, UsersTable, UserDetailsModal, Error } from "@/components";
 
 const Page = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -51,13 +47,13 @@ const Page = () => {
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
       />
-      <Table users={filteredUsers} setSelectedUser={setSelectedUserId} isLoading={isLoading} />
+      <UsersTable users={filteredUsers} setSelectedUser={setSelectedUserId} isLoading={isLoading} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
-      <Modal
+      <UserDetailsModal
         userId={selectedUserId}
         isOpen={selectedUserId !== null}
         onClose={() => setSelectedUserId(null)}
