@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { fetchUsers } from "@/lib/api";
+import Table from "@/components/Table";
 
 const Page = () => {
   const { data } = useQuery({
@@ -9,9 +10,11 @@ const Page = () => {
     queryFn: () => fetchUsers(1, 10),
   });
 
-  console.log(data);
-
-  return <div>Welcome to the Home Page</div>;
+  return (
+    <>
+      <Table users={data?.users || []} />
+    </>
+  );
 }
 
 export default Page;
