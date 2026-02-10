@@ -5,7 +5,8 @@
   margin-bottom: 16px;
 }
 
-.input {
+.input,
+.select {
   font-family: system-ui, -apple-system, sans-serif;
   font-size: 14px;
   padding: 8px 10px;
@@ -23,7 +24,8 @@
   color: #999;
 }
 
-.input:focus {
+.input:focus, 
+.select:focus {
   outline: none;
   border-color: #bbb;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.04);

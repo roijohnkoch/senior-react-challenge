@@ -28,3 +28,9 @@ export type UserResponse = {
   skip: number;
   limit: number;
 };
+
+export enum GenderFilter { 
+  All = "all",
+  Male = "male",
+  Female = "female"
+}
