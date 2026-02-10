@@ -22,11 +22,7 @@ const Page = () => {
 
   const filteredUsers = useMemo(() => {
     return data?.users.filter((user) => selectedFilter === "all" || user.gender === selectedFilter) || [];
-  }, [data?.users, selectedFilter])
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  }, [data?.users, selectedFilter]);
 
   return (
     <>
@@ -36,13 +32,17 @@ const Page = () => {
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
       />
-      <Table users={filteredUsers} setSelectedUser={setSelectedUserId} />
+      <Table users={filteredUsers} setSelectedUser={setSelectedUserId} isLoading={isLoading} />
       <Pagination
         currentPage={currentPage}
-        totalPages={Math.ceil((data?.total || 1) / 10)}
+        totalPages={data ? Math.ceil(data.total / 10) : 1}
         onPageChange={setCurrentPage}
       />
-      <Modal userId={selectedUserId} isOpen={selectedUserId !== null} onClose={() => setSelectedUserId(null)} />
+      <Modal
+        userId={selectedUserId}
+        isOpen={selectedUserId !== null}
+        onClose={() => setSelectedUserId(null)}
+      />
     </>
   );
 }

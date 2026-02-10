@@ -1,12 +1,14 @@
 import { User } from "@/types";
+import Loading from "./Loading";
 import styles from "./Table.module.css";
 
 interface TableProps {
   users: User[];
   setSelectedUser: (user: number | null) => void;
+  isLoading?: boolean;
 }
 
-const Table: React.FC<TableProps> = ({ users, setSelectedUser }) => {
+const Table: React.FC<TableProps> = ({ users, setSelectedUser, isLoading = false }) => {
   return (
     <table className={styles.table}>
       <thead>
@@ -17,7 +19,13 @@ const Table: React.FC<TableProps> = ({ users, setSelectedUser }) => {
         </tr>
       </thead>
       <tbody>
-        {users.map((user) => (
+        {isLoading ? (
+          <tr>
+            <td colSpan={3}>
+              <Loading />
+            </td>
+          </tr>
+        ) : users.map((user) => (
           <tr key={user.id} onClick={() => setSelectedUser(user.id)}>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserById } from "@/lib/api";
-import { User } from "@/types";
+import Loading from "./Loading";
 import styles from "./Modal.module.css";
 
 interface ModalProps {
@@ -13,7 +13,7 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ userId, onClose, isOpen }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const { data: user } = useQuery({
+  const { data: user, isLoading } = useQuery({
     queryKey: ["user", userId],
     queryFn: () => fetchUserById(userId!),
     enabled: userId !== null,
@@ -44,18 +44,22 @@ const Modal: React.FC<ModalProps> = ({ userId, onClose, isOpen }) => {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent} ref={modalRef}>
-        <h2 className={styles.modalHeader}>
-          {user?.firstName} {user?.lastName}
-        </h2>
-
-        <div className={styles.modalRow}>Email: {user?.email}</div>
-        <div className={styles.modalRow}>Phone: {user?.phone || "-"}</div>
-        <div className={styles.modalRow}>Company: {user?.company?.name || "-"}</div>
-        <div className={styles.modalRow}>Address: {user?.address?.address || "-"}</div>
-
-        <button className={styles.closeButton} onClick={onClose}>
-          Close
-        </button>
+        {isLoading ? <Loading text="Loading user details..." /> : (
+          <>
+            <h2 className={styles.modalHeader}>
+              {user?.firstName} {user?.lastName}
+            </h2>
+            <div className={styles.modalRow}>Email: {user?.email}</div>
+            <div className={styles.modalRow}>Phone: {user?.phone || "-"}</div>
+            <div className={styles.modalRow}>Company: {user?.company?.name || "-"}</div>
+            <div className={styles.modalRow}>Address: {user?.address?.address || "-"}</div>
+        
+            <button className={styles.closeButton} onClick={onClose}>
+              Close
+            </button>
+           
+          </>
+        )}
       </div>
     </div>
   );
