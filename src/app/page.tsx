@@ -5,14 +5,16 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchUsers } from "@/lib/api";
 import Table from "@/components/Table";
 import Filter from "@/components/Filter";
+import Pagination from "@/components/Pagination";
 
 const Page = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["users", 1, 10, { searchQuery }],
-    queryFn: () => fetchUsers(1, 10, searchQuery),
+    queryKey: ["users", currentPage, 10, { searchQuery }],
+    queryFn: () => fetchUsers(currentPage, 10, searchQuery),
     refetchOnWindowFocus: false,
   });
 
@@ -33,6 +35,11 @@ const Page = () => {
         setSelectedFilter={setSelectedFilter}
       />
       <Table users={filteredUsers} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={Math.ceil((data?.total || 1) / 10)}
+        onPageChange={setCurrentPage}
+      />
     </>
   );
 }
