@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUsers } from "@/lib/api";
 import Table from "@/components/Table";
@@ -13,6 +13,7 @@ const Page = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
   const { data, isLoading, isError, refetch } = useQuery({
@@ -20,6 +21,19 @@ const Page = () => {
     queryFn: () => fetchUsers(currentPage, 10, searchQuery),
     refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    if (data?.total) {
+      setTotalPages(Math.ceil(data.total / 10));
+    }
+  }, [data?.total]);
+
+  useEffect(() => {
+    if (data?.users.length === 0) {
+      setCurrentPage(1);
+      setTotalPages(1);
+    }
+  }, [data?.users]);
 
   const filteredUsers = useMemo(() => {
     return data?.users.filter((user) => selectedFilter === "all" || user.gender === selectedFilter) || [];
@@ -40,7 +54,7 @@ const Page = () => {
       <Table users={filteredUsers} setSelectedUser={setSelectedUserId} isLoading={isLoading} />
       <Pagination
         currentPage={currentPage}
-        totalPages={data ? Math.ceil(data.total / 10) : 1}
+        totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
       <Modal
