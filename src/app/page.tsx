@@ -13,7 +13,7 @@ const Page = () => {
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["users", currentPage, 10, { searchQuery }],
+    queryKey: ["users", currentPage, 10, searchQuery],
     queryFn: () => fetchUsers(currentPage, 10, searchQuery),
     refetchOnWindowFocus: false,
   });

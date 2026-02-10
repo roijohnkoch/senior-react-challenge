@@ -1,0 +1,58 @@
+:root {
+  --text-main: #333;
+  --text-muted: #555;
+  --text-faint: #999;
+  --text-error: #b00020;
+  --border-color: #ddd;
+  --border-hover: #bbb;
+  --background-hover: #fafafa;
+  --font-size: 14px;
+}
+
+body {
+  margin: 0;
+  font-size: var(--font-size);
+  color: var(--text-main);
+  background-color: #fff;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-main);
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+
+button:hover {
+  background-color: var(--background-hover);
+  border-color: var(--border-hover);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input,
+select {
+  font-size: var(--font-size);
+  padding: 8px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-main);
+  background-color: #fff;
+}
+
+input::placeholder {
+  color: var(--text-faint);
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--border-hover);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.04);
+}

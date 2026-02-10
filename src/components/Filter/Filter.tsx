@@ -36,13 +36,14 @@ const Filter: React.FC<FilterProps> = ({ searchQuery, setSearchQuery, selectedFi
   return (
     <div className={styles.container}>
       <input
+        type="text"
         className={styles.input}
         value={localSearch}
         placeholder="Search users by name or email"
         onChange={(e) => setLocalSearch(e.target.value)}
         aria-label="Search users by name or email"
       />
-      <select aria-label="Filter by gender" className={styles.select} value={selectedFilter} onChange={(e) => setSelectedFilter(e.target.value)}>
+      <select aria-label="Filter by gender" value={selectedFilter} onChange={(e) => setSelectedFilter(e.target.value)}>
         {filterOptions.map((option) => (
           <option key={option.value} value={option.value}>{option.label}</option>
         ))}

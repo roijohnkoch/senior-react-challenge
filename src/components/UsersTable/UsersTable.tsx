@@ -33,7 +33,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users, setSelectedUser, isLoadi
           </tr>
         ) : (
           users.map((user) => (
-            <tr key={user.id} onClick={() => setSelectedUser(user.id)} className="cursor-pointer hover:bg-gray-100">
+            <tr key={user.id} onClick={() => setSelectedUser(user.id)}>
               <td>{user.firstName}</td>
               <td>{user.lastName}</td>
               <td>{user.email}</td>

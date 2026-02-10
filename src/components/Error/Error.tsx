@@ -13,10 +13,7 @@ const Error: React.FC<ErrorProps> = ({
   return (
     <div className={styles.errorContainer}>
       <p className={styles.errorMessage}>{message}</p>
-      <button
-        className={styles.retryButton}
-        onClick={onRetry}
-      >
+      <button onClick={onRetry}>
         Retry
       </button>
     </div>
