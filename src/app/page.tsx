@@ -6,11 +6,13 @@ import { fetchUsers } from "@/lib/api";
 import Table from "@/components/Table";
 import Filter from "@/components/Filter";
 import Pagination from "@/components/Pagination";
+import Modal from "@/components/Modal";
 
 const Page = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["users", currentPage, 10, { searchQuery }],
@@ -34,12 +36,13 @@ const Page = () => {
         selectedFilter={selectedFilter}
         setSelectedFilter={setSelectedFilter}
       />
-      <Table users={filteredUsers} />
+      <Table users={filteredUsers} setSelectedUser={setSelectedUserId} />
       <Pagination
         currentPage={currentPage}
         totalPages={Math.ceil((data?.total || 1) / 10)}
         onPageChange={setCurrentPage}
       />
+      <Modal userId={selectedUserId} isOpen={selectedUserId !== null} onClose={() => setSelectedUserId(null)} />
     </>
   );
 }

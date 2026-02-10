@@ -13,7 +13,7 @@ export const fetchUsers = async (page: number, limit: number, searchQuery?: stri
 };
 
 export const fetchUserById = async (id: number) => {
-  const response = await fetch(`${API_URL}/users/${id}`);
+  const response = await fetch(`${API_URL}/${id}`);
   if (!response.ok) {
     throw new Error("Failed to fetch user");
   }

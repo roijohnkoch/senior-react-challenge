@@ -3,9 +3,10 @@ import styles from "./Table.module.css";
 
 interface TableProps {
   users: User[];
+  setSelectedUser: (user: number | null) => void;
 }
 
-const Table: React.FC<TableProps> = ({ users }) => {
+const Table: React.FC<TableProps> = ({ users, setSelectedUser }) => {
   return (
     <table className={styles.table}>
       <thead>
@@ -17,7 +18,7 @@ const Table: React.FC<TableProps> = ({ users }) => {
       </thead>
       <tbody>
         {users.map((user) => (
-          <tr key={user.id}>
+          <tr key={user.id} onClick={() => setSelectedUser(user.id)}>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
             <td>{user.email}</td>
