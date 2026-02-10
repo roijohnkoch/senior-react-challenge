@@ -7,6 +7,7 @@ import Table from "@/components/Table";
 import Filter from "@/components/Filter";
 import Pagination from "@/components/Pagination";
 import Modal from "@/components/Modal";
+import Error from "@/components/Error";
 
 const Page = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,7 +15,7 @@ const Page = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["users", currentPage, 10, { searchQuery }],
     queryFn: () => fetchUsers(currentPage, 10, searchQuery),
     refetchOnWindowFocus: false,
@@ -23,6 +24,10 @@ const Page = () => {
   const filteredUsers = useMemo(() => {
     return data?.users.filter((user) => selectedFilter === "all" || user.gender === selectedFilter) || [];
   }, [data?.users, selectedFilter]);
+
+  if (isError) {
+    return <Error onRetry={refetch} message="Failed to load users." />;
+  }
 
   return (
     <>

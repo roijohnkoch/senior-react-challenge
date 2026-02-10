@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUserById } from "@/lib/api";
 import Loading from "./Loading";
+import Error from "./Error";
 import styles from "./Modal.module.css";
 
 interface ModalProps {
@@ -13,7 +14,7 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ userId, onClose, isOpen }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const { data: user, isLoading } = useQuery({
+  const { data: user, isLoading, isError, refetch } = useQuery({
     queryKey: ["user", userId],
     queryFn: () => fetchUserById(userId!),
     enabled: userId !== null,
@@ -44,20 +45,31 @@ const Modal: React.FC<ModalProps> = ({ userId, onClose, isOpen }) => {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent} ref={modalRef}>
-        {isLoading ? <Loading text="Loading user details..." /> : (
+        {isLoading ? (
+          <Loading text="Loading user details..." />
+        ) : isError ? (
+          <Error
+            onRetry={() => refetch()}
+            message="Failed to load user details."
+          />
+        ) : (
           <>
             <h2 className={styles.modalHeader}>
               {user?.firstName} {user?.lastName}
             </h2>
-            <div className={styles.modalRow}>Email: {user?.email}</div>
+
+            <div className={styles.modalRow}>Email: {user?.email || "-"}</div>
             <div className={styles.modalRow}>Phone: {user?.phone || "-"}</div>
-            <div className={styles.modalRow}>Company: {user?.company?.name || "-"}</div>
-            <div className={styles.modalRow}>Address: {user?.address?.address || "-"}</div>
-        
+            <div className={styles.modalRow}>
+              Company: {user?.company?.name || "-"}
+            </div>
+            <div className={styles.modalRow}>
+              Address: {user?.address?.address || "-"}
+            </div>
+
             <button className={styles.closeButton} onClick={onClose}>
               Close
             </button>
-           
           </>
         )}
       </div>
