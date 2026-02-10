@@ -28,3 +28,9 @@
 .table tbody tr:hover {
   background-color: #fafafa;
 }
+
+.noUsersFound {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+}

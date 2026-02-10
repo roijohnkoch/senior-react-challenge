@@ -25,13 +25,21 @@ const Table: React.FC<TableProps> = ({ users, setSelectedUser, isLoading = false
               <Loading />
             </td>
           </tr>
-        ) : users.map((user) => (
-          <tr key={user.id} onClick={() => setSelectedUser(user.id)}>
-            <td>{user.firstName}</td>
-            <td>{user.lastName}</td>
-            <td>{user.email}</td>
+        ) : users.length === 0 ? (
+          <tr>
+            <td colSpan={3}>
+              <div className={styles.noUsersFound}>No users found.</div>
+            </td>
           </tr>
-        ))}
+        ) : (
+          users.map((user) => (
+            <tr key={user.id} onClick={() => setSelectedUser(user.id)} className="cursor-pointer hover:bg-gray-100">
+              <td>{user.firstName}</td>
+              <td>{user.lastName}</td>
+              <td>{user.email}</td>
+            </tr>
+          ))
+        )}
       </tbody>
     </table>
   )
